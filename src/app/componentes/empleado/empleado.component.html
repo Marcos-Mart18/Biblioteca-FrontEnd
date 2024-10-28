@@ -1,0 +1,88 @@
+<app-navbar></app-navbar>
+<div class="container table-responsive">
+    <h1>Tabla Empleado</h1>
+    <div class="d-flex justify-content-center mb-2">
+        <button type="button" class="btn btn-success bi bi-plus" data-bs-toggle="modal" data-bs-target="#form" (click)="isUpdate=false"></button>
+    </div>
+    <table class="table">
+        <thead class="table-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nombre Completo</th>
+            <th scope="col">Documentos</th>
+            <th scope="col">Teléfono</th>
+            <th scope="col">Correo</th>
+            <th scope="col">Estado</th>
+            <th scope="col">Acción</th>
+        </tr>
+        </thead>
+        <tbody class="table-group-divider">
+        <tr *ngFor="let empleado of empleados; let i = index">
+            <th scope="row">{{ i + 1 }}</th>
+            <!-- <td>{{categoria.idCategoria}}</td> -->
+            <td>{{empleado.nombres}} {{empleado.apellidos}}</td>
+            <td>{{empleado.documento}}</td>
+            <td>{{empleado.telefono}}</td>
+            <td>{{empleado.correo}}</td>
+            <td>{{empleado.estado}}</td>
+            <td>
+                <button type="button" class="btn btn-outline-success mx-2 bi bi-pencil-fill" (click)="selectEmpleadol(empleado)" data-bs-toggle="modal" data-bs-target="#form"></button>
+                <button type="button" class="btn btn-outline-danger bi bi-archive" (click)="eliminarEmpleado(empleado.idEmpleado)"></button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="modal fade" id="form" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5" *ngIf="!isUpdate">Agregar Empleado</h1>
+            <h1 class="modal-title fs-5" *ngIf="isUpdate">Actualizar Empleado</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="formEmpleado"> 
+            <div class="mb-3">
+                <label for="nombre" class="col-form-label">Nombres:</label>
+                <input type="text" class="form-control" id="nombre" formControlName="nombres">
+            </div>
+            <div class="mb-3">
+                <label for="apellidos" class="col-form-label">Apellidos:</label>
+                <input type="text" class="form-control" id="apellidos" formControlName="apellidos">
+            </div>
+            <div class="mb-3">
+                <label for="documento" class="form-label">Documento</label>
+                <select id="documento" class="form-select" formControlName="documento">
+                <option value="" disabled selected>Seleccione una opción</option>
+                <option>S</option>
+                <option>N</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="telefono" class="col-form-label">Teléfono:</label>
+                <input type="text" class="form-control" id="telefono" formControlName="telefono">
+            </div>
+            <div class="mb-3">
+                <label for="correo" class="col-form-label">Correo:</label>
+                <input type="email" class="form-control" id="correo" formControlName="correo">
+            </div>
+            <div class="mb-3">
+                <label for="estado" class="form-label">Estado</label>
+                <select class="form-select" aria-label="Default select example" id="estado" formControlName="estado">
+                    <option value="" disabled selected>Seleccione una opción</option>
+                    <option>A</option>
+                    <option>I</option>
+                </select>
+            </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="resetFormEmpleado()">Close</button>
+            <button type="button" class="btn btn-primary" (click)="CrearEmpleado()" *ngIf="!isUpdate" data-bs-dismiss="modal">Agregar</button>
+            <button type="button" class="btn btn-success" (click)="actualizarEmpleado()" *ngIf="isUpdate" data-bs-dismiss="modal">Actualizar</button>
+        </div>
+        </div>
+    </div>
+</div>

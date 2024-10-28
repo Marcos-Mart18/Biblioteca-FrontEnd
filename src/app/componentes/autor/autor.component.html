@@ -1,0 +1,90 @@
+<app-navbar></app-navbar>
+<div class="container table-responsive mt-2">
+    <div class="d-flex justify-content-between">
+        <h1>Tabla Autores</h1>
+        <button type="button" class="btn btn-outline-secondary bi bi-arrow-left-right" (click)="cambiaVista()"></button>
+    </div>
+    <div class="d-flex justify-content-center mb-2">
+        <button type="button" class="btn btn-success bi bi-plus" data-bs-toggle="modal" data-bs-target="#form" (click)="isUpdate=false"></button>
+    </div>
+    <table class="table" *ngIf="mostrarTabla">
+        <thead class="table-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nombre Completo</th>
+            <th scope="col">Pais</th>
+            <th scope="col">Estado</th>
+            <th scope="col">Acción</th>
+        </tr>
+        </thead>
+        <tbody class="table-group-divider">
+        <tr *ngFor="let autor of autores; let i = index">
+            <th scope="row">{{ i + 1 }}</th>
+            <!-- <td>{{categoria.idCategoria}}</td> -->
+            <td>{{autor.nombres}} {{autor.apellidos}}</td>
+            <td>{{autor.pais}}</td>
+            <td>{{autor.estado}}</td>
+            <td>
+                <button type="button" class="btn btn-outline-success mx-2 bi bi-pencil-fill" (click)="selectAutor(autor)" data-bs-toggle="modal" data-bs-target="#form"></button>
+                <button type="button" class="btn btn-outline-danger bi bi-archive" (click)="eliminarAutor(autor.idAutor)"></button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="container d-flex flex-wrap justify-content-center gap-4"  *ngIf="!mostrarTabla">
+    <div class="card" *ngFor="let autor of autores; let i = index" style="width: 18rem;">
+        <div class="card-header d-flex justify-content-center">
+            <h5>{{ i + 1 }}</h5>
+        </div>
+        <img src="..." class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">{{autor.nombres}} {{autor.apellidos}}</h5>
+            <p>{{autor.pais}}</p>
+            <p class="card-text">Texto de ejemplo</p>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="form" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5" *ngIf="!isUpdate">Agregar Autor</h1>
+            <h1 class="modal-title fs-5" *ngIf="isUpdate">Actualizar Autor</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="formAutor"> 
+            <div class="mb-3">
+                <label for="nombre" class="col-form-label">Nombres:</label>
+                <input type="text" class="form-control" id="nombre" formControlName="nombres">
+            </div>
+            <div class="mb-3">
+                <label for="apellido" class="col-form-label">Apellidos:</label>
+                <input type="text" class="form-control" id="apellido" formControlName="apellidos">
+            </div>
+            <div class="mb-3">
+                <label for="pais" class="col-form-label">Pais:</label>
+                <input type="text" class="form-control" id="pais" formControlName="pais">
+            </div>
+            <div class="mb-3">
+                <label for="estado" class="form-label">Estado</label>
+                <select class="form-select" aria-label="Default select example" id="estado" formControlName="estado">
+                    <option value="" disabled selected>Seleccione una opción</option>
+                    <option>A</option>
+                    <option>I</option>
+                </select>
+            </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="resetFormAutor()">Close</button>
+            <button type="button" class="btn btn-primary" (click)="CrearAutor()" *ngIf="!isUpdate" data-bs-dismiss="modal">Agregar</button>
+            <button type="button" class="btn btn-success" (click)="actualizarAutor()" *ngIf="isUpdate" data-bs-dismiss="modal">Actualizar</button>
+        </div>
+        </div>
+    </div>
+</div>
