@@ -1,64 +1,64 @@
 <div class="container" *ngIf="!isLoading; else loadingTemplate">
     <div class="img">
+        <!-- <img src="assets/logoCRAI.png" alt="Logo" /> -->
+        <!-- <img src="assets/logoCRAI.svg" alt="Logo" /> -->
         <img src="assets/book.png" alt="Logo" />
     </div>
     <form class="form" #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)" novalidate>
         <p class="form-title">Por favor, identifíquese</p>
         <!-- Campo Usuario -->
         <div class="input-container">
-            <input
+        <i class="input-icon bi bi-person"></i>
+        <input
             type="text"
             placeholder="Usuario"
             [(ngModel)]="loginDto.username"
             name="username"
             #username="ngModel"
             required
-            />
-            <!-- Mensaje de error -->
-            <p *ngIf="loginForm.submitted && username.invalid" class="error-message">
+        />
+        <!-- Mensaje de error -->
+        <p *ngIf="loginForm.submitted && username.invalid" class="error-message">
             El campo Usuario es requerido.
-            </p>
+        </p>
         </div>
-    
         <!-- Campo Contraseña -->
         <div class="input-container password-container">
-            <input
+        <i class="input-icon bi bi-lock"></i>
+        <input
             [type]="showPassword ? 'text' : 'password'"
             placeholder="Contraseña"
             [(ngModel)]="loginDto.password"
             name="password"
             #password="ngModel"
             required
-            />
-            <i
+        />
+        <i
             class="toggle-password-icon"
             [ngClass]="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"
             (click)="togglePasswordVisibility()"
-            ></i>
-            <!-- Mensaje de error -->
-            <p *ngIf="loginForm.submitted && password.invalid" class="error-message">
+            title="Mostrar/Ocultar contraseña"
+        ></i>
+        <!-- Mensaje de error -->
+        <p *ngIf="loginForm.submitted && password.invalid" class="error-message">
             El campo Contraseña es requerido.
-            </p>
-        </div>
-    
-        <!-- Mensaje de error general -->
-        <p *ngIf="errorMessage" class="error-message">
-            {{ errorMessage }}
         </p>
-    
+        </div>
+        <!-- Mensaje de error general -->
+      <p *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+        </p>
         <button type="submit" class="submit">Iniciar Sesión</button>
-    
         <p class="signup-link">
-            ¿No estás registrado?
-            <a href="asd">Contáctanos</a>
+        ¿No estás registrado?
+        <a href="asd">Contáctanos</a>
         </p>
     </form>
     </div>
-    
     <!-- Plantilla de carga -->
     <ng-template #loadingTemplate>
-        <div class="loading-screen">
+    <div class="loading-screen">
         <p>Espere, procesando su solicitud...</p>
         <div class="spinner"></div>
-        </div>
-</ng-template>
+    </div>
+    </ng-template>

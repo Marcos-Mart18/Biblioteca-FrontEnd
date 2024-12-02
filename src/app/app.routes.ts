@@ -14,6 +14,7 @@ import { ErrorComponent } from './compWeb/error/error.component';
 import { HomeComponent } from './home/home.component';
 import { AuthGuard } from './auth.guard';
 import { roleGuard } from './role.guard';
+import { ReportesComponent } from './reportes/reportes.component';
 
 export const routes: Routes = [
     {
@@ -24,7 +25,7 @@ export const routes: Routes = [
     {
         path:'home-biblio',
         component:HomeComponent,
-        title:'Pagina navbar',
+        title:'Pagina Inicio',
         canActivate: [AuthGuard]
     },
     {
@@ -101,6 +102,13 @@ export const routes: Routes = [
         path:'libro-biblio',
         component:LibroComponent,
         title:'Pagina Libro',
+        canActivate: [AuthGuard, roleGuard],
+        data: { roles: ['ADMIN', 'USER'] }
+    },
+    {
+        path:'reportes-biblio',
+        component:ReportesComponent,
+        title:'Pagina Reportes',
         canActivate: [AuthGuard, roleGuard],
         data: { roles: ['ADMIN', 'USER'] }
     }, 
