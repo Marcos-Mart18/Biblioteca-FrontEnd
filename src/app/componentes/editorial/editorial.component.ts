@@ -5,11 +5,13 @@ import { NavbarComponent } from '../navbar/navbar.component';
 import { NgFor, NgIf } from '@angular/common';
 import { EditorialService } from '../../service/editorial.service';
 import Swal from 'sweetalert2';
+import { HeaderComponent } from '../header/header.component';
+import { AuthService } from '../../auth.service';
 
 @Component({
   selector: 'app-editorial',
   standalone: true,
-  imports: [NavbarComponent,NgFor,FormsModule,NgIf,ReactiveFormsModule],
+  imports: [NavbarComponent,NgFor,FormsModule,NgIf,ReactiveFormsModule,HeaderComponent],
   templateUrl: './editorial.component.html',
   styleUrl: './editorial.component.css'
 })
@@ -17,10 +19,21 @@ export class EditorialComponent {
   editoriales: Editorial[]=[];
   isUpdate:boolean = false;
   formEditorial:FormGroup = new FormGroup({});
+  titulo='Gestión de Editoriales';
+  icono='bi bi-boombox-fill';
 
   constructor(
-    private editorialService:EditorialService
+    private editorialService:EditorialService,
+    private authService: AuthService
   ){}
+
+  get isAdmin(): boolean {
+    return this.authService.hasRole('ROLE_ADMIN');
+  }
+  
+  get isUser(): boolean {
+    return this.authService.hasRole('ROLE_USER');
+  }
 
   ngOnInit():void{
     this.listarEditoriales();

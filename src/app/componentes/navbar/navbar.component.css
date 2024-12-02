@@ -1,0 +1,98 @@
+.navbar {
+  background-color: #f8f9fa; 
+  border-bottom: 1px solid #e9ecef; 
+}
+
+.navbar-brand {
+  font-size: 1.5rem; 
+  font-weight: bold; 
+  color: #007bff; 
+  text-transform: uppercase; 
+  transition: color 0.3s ease; 
+}
+
+.navbar-brand:hover {
+  color: #0056b3; 
+  text-decoration: none;
+}
+
+.nav-link {
+  color: #343a40;
+  font-weight: 500;
+  margin: 0 10px; 
+  transition: color 0.3s ease; 
+}
+
+.nav-link:hover {
+  color: #007bff; 
+}
+
+.nav-link.active {
+  color: #0056b3; 
+  font-weight: 600;
+}
+
+.crai-dropdown {
+  position: relative;
+}
+
+.crai-dropdown .dropdown-menu {
+  display: none; 
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  background-color: #f8f9fa; 
+  padding: 0.5rem 0;
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1); 
+  border-radius: 0.25rem;
+  animation: fadeIn 0.3s ease-in-out; 
+}
+
+.crai-dropdown:hover .dropdown-menu {
+  display: block; 
+}
+
+.crai-dropdown .dropdown-item {
+  padding: 0.5rem 1rem; 
+  color: #333; 
+  text-decoration: none; 
+}
+
+.crai-dropdown .dropdown-item:hover {
+  background-color: #e9ecef; 
+  color: #000; 
+}
+
+.crai-dropdown > .navbar-brand {
+  cursor: pointer; 
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.navbar-toggler {
+  border-color: rgba(0, 0, 0, 0.1); 
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba%28100, 100, 100, 0.5%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+.collapse .navbar-nav {
+  text-align: center;
+  padding: 10px 0;
+}
+
+.nav-link:focus, .dropdown-item:focus {
+  outline: 2px solid #007bff; 
+  outline-offset: 2px; 
+}

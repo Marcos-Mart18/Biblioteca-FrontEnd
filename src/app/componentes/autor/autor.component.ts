@@ -5,11 +5,13 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
 import { AutorService } from '../../service/autor.service';
 import Swal from 'sweetalert2';
 import { NgFor, NgIf } from '@angular/common';
+import { HeaderComponent } from '../header/header.component';
+import { AuthService } from '../../auth.service';
 
 @Component({
   selector: 'app-autor',
   standalone: true,
-  imports: [NavbarComponent,NgFor,FormsModule,NgIf,ReactiveFormsModule],
+  imports: [NavbarComponent,NgFor,FormsModule,NgIf,ReactiveFormsModule,HeaderComponent],
   templateUrl: './autor.component.html',
   styleUrl: './autor.component.css'
 })
@@ -18,14 +20,25 @@ export class AutorComponent {
   isUpdate:boolean = false;
   formAutor:FormGroup = new FormGroup({});
   mostrarTabla: boolean = true;
+  titulo='Gestión de Autores';
+  icono='bi bi-boombox-fill';
 
   cambiaVista() {
     this.mostrarTabla = !this.mostrarTabla;
   }
 
   constructor(
-    private autorService:AutorService
+    private autorService:AutorService,
+    private authService: AuthService
   ){}
+
+  get isAdmin(): boolean {
+    return this.authService.hasRole('ROLE_ADMIN');
+  }
+  
+  get isUser(): boolean {
+    return this.authService.hasRole('ROLE_USER');
+  }
 
   ngOnInit():void{
     this.listarAutores();

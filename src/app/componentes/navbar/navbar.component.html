@@ -1,31 +1,56 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container-fluid">
-      <a class="navbar-brand">CRAI</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" [routerLink]="'/'">Inicio</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Tablas
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" [routerLink]="'/categoria-biblio'">Categoria</a></li>
-              <li><a class="dropdown-item" [routerLink]="'/seccion-biblio'">Seccion</a></li>
-              <li><a class="dropdown-item" [routerLink]="'/autor-biblio'">Autor</a></li>
-              <li><a class="dropdown-item" [routerLink]="'/editorial-biblio'">Editorial</a></li>
-              <li><a class="dropdown-item" [routerLink]="'/empleado-biblio'">Empleado</a></li>
-              <li><a class="dropdown-item" [routerLink]="'/acceso-biblio'">Acceso</a></li>
-              <li><a class="dropdown-item" [routerLink]="'/rol-biblio'">Rol</a></li>
-              <li><a class="dropdown-item" [routerLink]="'/acceso_rol-biblio'">Acceso-Rol</a></li>
-              <li><a class="dropdown-item" [routerLink]="'/libro-biblio'">Libro</a></li>
-            </ul>
-          </li>
-        </ul>
-      </div>
+  <div class="container-fluid">
+    <!-- Dropdown CRAI -->
+    <div class="crai-dropdown">
+      <a class="navbar-brand" role="button">CRAI</a>
+      <ul class="dropdown-menu">
+        <li><a class="dropdown-item" (click)="logout()">Cerrar sesión</a></li>
+      </ul>
     </div>
-  </nav>
+
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" [routerLink]="'/home-biblio'">Inicio</a>
+        </li>
+        <!-- Dropdown Catálogos -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Catálogos
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" [routerLink]="'/categoria-biblio'" *ngIf="isAdmin || isUser">Categoría</a></li>
+            <li><a class="dropdown-item" [routerLink]="'/seccion-biblio'" *ngIf="isAdmin || isUser">Sección</a></li>
+            <li><a class="dropdown-item" [routerLink]="'/autor-biblio'" *ngIf="isAdmin || isUser">Autor</a></li>
+            <li><a class="dropdown-item" [routerLink]="'/editorial-biblio'" *ngIf="isAdmin || isUser">Editorial</a></li>
+            <li><a class="dropdown-item" [routerLink]="'/libro-biblio'" *ngIf="isAdmin || isUser">Libro</a></li>
+          </ul>
+        </li>
+        <!-- Dropdown Configuración -->
+        <li class="nav-item dropdown" *ngIf="isAdmin">
+          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Configuración
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" [routerLink]="'/empleado-biblio'">Empleado</a></li>
+            <li><a class="dropdown-item" [routerLink]="'/acceso-biblio'">Acceso</a></li>
+            <li><a class="dropdown-item" [routerLink]="'/rol-biblio'">Rol</a></li>
+            <li><a class="dropdown-item" [routerLink]="'/acceso_rol-biblio'">Acceso-Rol</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

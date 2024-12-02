@@ -5,11 +5,12 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
 import { Rol } from '../../model/rol';
 import { RolService } from '../../service/rol.service';
 import Swal from 'sweetalert2';
+import { HeaderComponent } from '../header/header.component';
 
 @Component({
   selector: 'app-rol',
   standalone: true,
-  imports: [NavbarComponent,NgFor,FormsModule,NgIf,ReactiveFormsModule],
+  imports: [NavbarComponent,NgFor,FormsModule,NgIf,ReactiveFormsModule,HeaderComponent],
   templateUrl: './rol.component.html',
   styleUrl: './rol.component.css'
 })
@@ -17,6 +18,8 @@ export class RolComponent {
   roles: Rol[]=[];
   isUpdate:boolean = false;
   formRol:FormGroup = new FormGroup({});
+  titulo='Gestión de Roles';
+  icono='bi bi-boombox-fill';
 
   constructor(
     private rolService:RolService

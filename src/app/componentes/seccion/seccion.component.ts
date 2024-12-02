@@ -7,12 +7,14 @@ import { NavbarComponent } from '../navbar/navbar.component';
 import { NgFor, NgIf } from '@angular/common';
 import { Categoria } from '../../model/categoria';
 import { CategoriaService } from '../../service/categoria.service';
+import { HeaderComponent } from '../header/header.component';
+import { AuthService } from '../../auth.service';
 
 
 @Component({
   selector: 'app-seccion',
   standalone: true,
-  imports: [NavbarComponent,NgFor,FormsModule,NgIf,ReactiveFormsModule],
+  imports: [NavbarComponent,NgFor,FormsModule,NgIf,ReactiveFormsModule,HeaderComponent],
   templateUrl: './seccion.component.html',
   styleUrl: './seccion.component.css'
 })
@@ -21,11 +23,22 @@ export class SeccionComponent {
   secciones: Seccion[]=[];
   isUpdate:boolean = false;
   formSeccion:FormGroup = new FormGroup({});
+  titulo='Gestión de Secciones';
+  icono='bi bi-boombox-fill';
 
   constructor(
     private seccionService:SeccionService,
-    private categoriaService:CategoriaService
+    private categoriaService:CategoriaService,
+    private authService: AuthService
   ){}
+  
+  get isAdmin(): boolean {
+    return this.authService.hasRole('ROLE_ADMIN');
+  }
+  
+  get isUser(): boolean {
+    return this.authService.hasRole('ROLE_USER');
+  }
 
   ngOnInit():void{
     this.listarSecciones();

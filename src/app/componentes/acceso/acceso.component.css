@@ -1,0 +1,105 @@
+/* General Styles */
+.container {
+    margin-top: 20px;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Botón Agregar Acceso */
+.btn-success {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+}
+
+.btn-success i {
+    font-size: 1.2rem;
+}
+
+/* Tabla */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 1rem;
+}
+
+.table-bordered {
+    border: 1px solid #dee2e6;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+th, td {
+    text-align: center;
+    padding: 0.75rem;
+    vertical-align: middle;
+}
+
+.table-dark {
+    background-color: #343a40;
+    color: white;
+}
+
+/* Botones de Acción */
+.btn-outline-success, .btn-outline-danger {
+    padding: 0.4rem 0.75rem;
+    font-size: 1rem;
+}
+
+.btn-outline-success {
+    color: #198754;
+    border-color: #198754;
+}
+
+.btn-outline-success:hover {
+    background-color: #198754;
+    color: white;
+}
+
+.btn-outline-danger {
+    color: #dc3545;
+    border-color: #dc3545;
+}
+
+.btn-outline-danger:hover {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* Modal */
+.modal-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #007bff;
+}
+
+.modal-footer .btn {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+}
+
+.modal-footer .btn-danger {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.modal-footer .btn-primary {
+    background-color: #0d6efd;
+    color: #fff;
+}
+
+.modal-footer .btn-success {
+    background-color: #198754;
+    color: #fff;
+}
+
+/* Validación visual para formularios */
+input.ng-invalid.ng-touched, select.ng-invalid.ng-touched {
+    border-color: #dc3545;
+    box-shadow: 0 0 5px rgba(220, 53, 69, 0.5);
+}
+
+label.error {
+    color: #dc3545;
+    font-size: 0.875rem;
+}

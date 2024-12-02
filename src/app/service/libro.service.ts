@@ -18,13 +18,14 @@ export class LibroService {
     return this.http.post<Libro>(this.apiUrl,libro);
   }
 
-  getLibroById(idLibrp:number):Observable<Libro>{
-    return this.http.get<Libro>(`${this.apiUrl}/${idLibrp}`);
+  getLibroById(idLibro:number):Observable<Libro>{
+    return this.http.get<Libro>(`${this.apiUrl}/${idLibro}`);
   }
 
-  actualizarLibro(libro: Libro):Observable<Libro>{
-    return this.http.post<Libro>(this.apiUrl,libro);
+  actualizarLibro(libro: Libro): Observable<Libro> {
+    return this.http.put<Libro>(`${this.apiUrl}/${libro.idLibro}`, libro);
   }
+  
 
   deleteAutor(idLibro: number){
     return this.http.delete(`${this.apiUrl}/${idLibro}`);

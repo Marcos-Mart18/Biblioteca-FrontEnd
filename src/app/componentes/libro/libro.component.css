@@ -3,3 +3,222 @@
     height: 200px;
     
 }
+
+/* General Styles */
+.container {
+    margin-top: 20px;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Botón Agregar y Cambiar Vista */
+.btn-success {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.btn-success i {
+    font-size: 1.2rem;
+}
+
+.btn-outline-secondary {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+}
+
+/* Tabla */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 1rem;
+}
+
+.table-bordered {
+    border: 1px solid #dee2e6;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+th, td {
+    text-align: center;
+    padding: 0.75rem;
+    vertical-align: middle;
+}
+
+.table-dark {
+    background-color: #343a40;
+    color: white;
+}
+
+/* Miniaturas de Imágenes */
+.img-thumbnail {
+    border-radius: 5px;
+    object-fit: cover;
+}
+
+/* General Styles for Cards */
+.card {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra inicial */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transición suave */
+    border: 2px solid #f1f1f1; /* Borde sutil */
+    background-color: #ffffff; /* Fondo blanco */
+    border-radius: 10px; /* Esquinas redondeadas */
+    overflow: hidden; /* Ocultar contenido desbordado */
+}
+
+.card:hover {
+    transform: scale(1.05); /* Escalar al hacer hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+    border-color: #198754; /* Cambiar el borde al hacer hover */
+}
+
+/* Imagen de Portada */
+.card-img-top {
+    border: 1px solid #dee2e6; /* Borde alrededor de la imagen */
+    border-radius: 5px; /* Esquinas redondeadas */
+    background-color: #f8f9fa; /* Fondo sutil */
+    padding: 5px; /* Espaciado interno */
+    max-width: 150px; /* Ancho máximo */
+    height: 200px; /* Altura fija */
+    object-fit: cover; /* Ajuste proporcional sin deformar */
+}
+
+/* Contenido de la Tarjeta */
+.card-body {
+    padding: 1.5rem; /* Espaciado interno mayor */
+    text-align: left; /* Alineación a la izquierda */
+}
+
+/* Títulos en la Tarjeta */
+.card-title {
+    font-size: 1.2rem; /* Tamaño de fuente mayor */
+    font-weight: bold; /* Negrita */
+    margin-bottom: 1rem; /* Espaciado inferior */
+    text-align: center; /* Centrado */
+}
+
+/* Texto Informativo */
+.card-text, p {
+    margin-bottom: 0.5rem; /* Espaciado entre líneas */
+}
+
+/* Destacar Etiquetas (Páginas, Edición, etc.) */
+.card-body strong {
+    color: #495057; /* Color gris oscuro */
+    font-weight: 600; /* Negrita */
+}
+
+/* Botones */
+.card-body .btn {
+    width: 40px; /* Ancho uniforme */
+    height: 40px; /* Altura uniforme */
+    display: inline-flex; /* Para centrar contenido */
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem; /* Tamaño de fuente */
+    border-radius: 50%; /* Forma circular */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.card-body .btn-outline-success {
+    color: #198754; /* Color inicial */
+    border-color: #198754; /* Borde inicial */
+}
+
+.card-body .btn-outline-success:hover {
+    background-color: #198754; /* Fondo al hacer hover */
+    color: white; /* Color del texto al hacer hover */
+}
+
+.card-body .btn-outline-danger {
+    color: #dc3545; /* Color inicial */
+    border-color: #dc3545; /* Borde inicial */
+}
+
+.card-body .btn-outline-danger:hover {
+    background-color: #dc3545; /* Fondo al hacer hover */
+    color: white; /* Color del texto al hacer hover */
+}
+
+/* Espaciado entre Botones */
+.d-flex.justify-content-center {
+    gap: 1rem; /* Espacio entre botones */
+    margin-top: 1rem; /* Separación superior */
+}
+
+/* Sombra y Fondo del Header */
+.card-header {
+    background-color: #f8f9fa; /* Fondo claro */
+    font-weight: bold; /* Negrita */
+    border-bottom: 1px solid #dee2e6; /* Línea separadora */
+    text-align: center; /* Centrado del contenido */
+}
+
+
+
+/* Botones de Acción */
+.btn-outline-success, .btn-outline-danger {
+    padding: 0.4rem 0.75rem;
+    font-size: 1rem;
+}
+
+.btn-outline-success {
+    color: #198754;
+    border-color: #198754;
+}
+
+.btn-outline-success:hover {
+    background-color: #198754;
+    color: white;
+}
+
+.btn-outline-danger {
+    color: #dc3545;
+    border-color: #dc3545;
+}
+
+.btn-outline-danger:hover {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* Modal */
+.modal-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #007bff;
+}
+
+.modal-footer .btn {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+}
+
+.modal-footer .btn-danger {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.modal-footer .btn-primary {
+    background-color: #0d6efd;
+    color: #fff;
+}
+
+.modal-footer .btn-success {
+    background-color: #198754;
+    color: #fff;
+}
+
+/* Validación visual para formularios */
+input.ng-invalid.ng-touched, select.ng-invalid.ng-touched {
+    border-color: #dc3545;
+    box-shadow: 0 0 5px rgba(220, 53, 69, 0.5);
+}
+
+label.error {
+    color: #dc3545;
+    font-size: 0.875rem;
+}

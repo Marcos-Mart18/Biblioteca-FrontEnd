@@ -5,11 +5,12 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
 import { Empleado } from '../../model/empleado';
 import { EmpleadoService } from '../../service/empleado.service';
 import Swal from 'sweetalert2';
+import { HeaderComponent } from '../header/header.component';
 
 @Component({
   selector: 'app-empleado',
   standalone: true,
-  imports: [NavbarComponent,NgFor,FormsModule,NgIf,ReactiveFormsModule],
+  imports: [NavbarComponent,NgFor,FormsModule,NgIf,ReactiveFormsModule,HeaderComponent],
   templateUrl: './empleado.component.html',
   styleUrl: './empleado.component.css'
 })
@@ -17,6 +18,8 @@ export class EmpleadoComponent {
   empleados: Empleado[]=[];
   isUpdate:boolean = false;
   formEmpleado:FormGroup = new FormGroup({});
+  titulo='Gestión de Empleados';
+  icono='bi bi-boombox-fill';
 
   constructor(
     private empleadoService:EmpleadoService

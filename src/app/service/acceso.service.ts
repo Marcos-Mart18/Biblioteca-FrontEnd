@@ -23,9 +23,10 @@ export class AccesoService {
     return this.http.get<Acceso>(`${this.apiUrl}/${idAcceso}`);
   }
 
-  actualizarAcceso(acceso: Acceso):Observable<Acceso>{
-    return this.http.post<Acceso>(this.apiUrl,acceso);
+  actualizarAcceso(acceso: Acceso): Observable<Acceso> {
+    return this.http.put<Acceso>(`${this.apiUrl}/${acceso.idAcceso}`, acceso);
   }
+  
 
   deleteAcceso(idAcceso: number){
     return this.http.delete(`${this.apiUrl}/${idAcceso}`);

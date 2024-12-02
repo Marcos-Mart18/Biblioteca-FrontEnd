@@ -22,9 +22,10 @@ export class EditorialService {
     return this.http.get<Editorial>(`${this.apiUrl}/${idEditorial}`);
   }
 
-  actualizarEditorial(editorial: Editorial):Observable<Editorial>{
-    return this.http.post<Editorial>(this.apiUrl,editorial);
+  actualizarEditorial(editorial: Editorial): Observable<Editorial> {
+    return this.http.put<Editorial>(`${this.apiUrl}/${editorial.idEditorial}`, editorial);
   }
+  
 
   deleteEditorial(idEditorial: number){
     return this.http.delete(`${this.apiUrl}/${idEditorial}`);

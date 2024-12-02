@@ -22,9 +22,10 @@ export class EmpleadoService {
     return this.http.get<Empleado>(`${this.apiUrl}/${idEmpleado}`);
   }
 
-  actualizarEmpleado(empleado: Empleado):Observable<Empleado>{
-    return this.http.post<Empleado>(this.apiUrl,empleado);
+  actualizarEmpleado(empleado: Empleado): Observable<Empleado> {
+    return this.http.put<Empleado>(`${this.apiUrl}/${empleado.idEmpleado}`, empleado);
   }
+  
 
   deleteEmpleado(idEmpleado: number){
     return this.http.delete(`${this.apiUrl}/${idEmpleado}`);

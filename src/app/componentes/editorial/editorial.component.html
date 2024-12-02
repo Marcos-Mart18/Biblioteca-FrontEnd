@@ -1,29 +1,30 @@
 <app-navbar></app-navbar>
 <div class="container table-responsive">
-    <h1>Tabla Editorial</h1>
-    <div class="d-flex justify-content-center mb-2">
-        <button type="button" class="btn btn-success bi bi-plus" data-bs-toggle="modal" data-bs-target="#form" (click)="isUpdate=false"></button>
+    <app-header [titulo]="titulo" [icono]="icono"></app-header>
+    <div class="d-flex justify-content-center mb-3">
+        <button type="button" class="btn btn-success d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#form" (click)="isUpdate=false" *ngIf="isAdmin">
+            <i class="bi bi-plus me-2"></i> Agregar Editorial
+        </button>
     </div>
-    <table class="table">
+    <table class="table table-bordered table-hover">
         <thead class="table-dark">
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Estado</th>
-            <th scope="col">Acción</th>
-        </tr>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Estado</th>
+                <th scope="col" *ngIf="isAdmin">Acción</th>
+            </tr>
         </thead>
-        <tbody class="table-group-divider">
-        <tr *ngFor="let editorial of editoriales; let i = index">
-            <th scope="row">{{ i + 1 }}</th>
-            <!-- <td>{{categoria.idCategoria}}</td> -->
-            <td>{{editorial.nombre}}</td>
-            <td>{{editorial.estado}}</td>
-            <td>
-                <button type="button" class="btn btn-outline-success mx-2 bi bi-pencil-fill" (click)="selectEditorial(editorial)" data-bs-toggle="modal" data-bs-target="#form"></button>
-                <button type="button" class="btn btn-outline-danger bi bi-archive" (click)="eliminarEditorial(editorial.idEditorial)"></button>
-            </td>
-        </tr>
+        <tbody>
+            <tr *ngFor="let editorial of editoriales; let i = index">
+                <th scope="row">{{ i + 1 }}</th>
+                <td>{{ editorial.nombre }}</td>
+                <td>{{ editorial.estado }}</td>
+                <td *ngIf="isAdmin">
+                    <button type="button" class="btn btn-outline-success mx-2 bi bi-pencil-fill" (click)="selectEditorial(editorial)" data-bs-toggle="modal" data-bs-target="#form"></button>
+                    <button type="button" class="btn btn-outline-danger bi bi-archive" (click)="eliminarEditorial(editorial.idEditorial)"></button>
+                </td>
+            </tr>
         </tbody>
     </table>
 </div>
@@ -31,32 +32,32 @@
 <div class="modal fade" id="form" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-        <div class="modal-header">
-            <h1 class="modal-title fs-5" *ngIf="!isUpdate">Agregar Editorial</h1>
-            <h1 class="modal-title fs-5" *ngIf="isUpdate">Actualizar Editorial</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <form [formGroup]="formEditorial"> 
-            <div class="mb-3">
-                <label for="nombre" class="col-form-label">Nombre:</label>
-                <input type="text" class="form-control" id="nombre" formControlName="nombre">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" *ngIf="!isUpdate">Agregar Editorial</h1>
+                <h1 class="modal-title fs-5" *ngIf="isUpdate">Actualizar Editorial</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
             </div>
-            <div class="mb-3">
-                <label for="estado" class="form-label">Estado</label>
-                <select class="form-select" aria-label="Default select example" id="estado" formControlName="estado">
-                    <option value="" disabled selected>Seleccione una opción</option>
-                    <option>A</option>
-                    <option>I</option>
-                </select>
+            <div class="modal-body">
+                <form [formGroup]="formEditorial">
+                    <div class="mb-3">
+                        <label for="nombre" class="col-form-label">Nombre:</label>
+                        <input type="text" class="form-control" id="nombre" formControlName="nombre">
+                    </div>
+                    <div class="mb-3">
+                        <label for="estado" class="form-label">Estado:</label>
+                        <select class="form-select" id="estado" formControlName="estado">
+                            <option value="" disabled selected>Seleccione una opción</option>
+                            <option value="A">Activo</option>
+                            <option value="I">Inactivo</option>
+                        </select>
+                    </div>
+                </form>
             </div>
-            </form>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="resetFormEditorial()">Close</button>
-            <button type="button" class="btn btn-primary" (click)="CrearEditorial()" *ngIf="!isUpdate" data-bs-dismiss="modal">Agregar</button>
-            <button type="button" class="btn btn-success" (click)="actualizarEditorial()" *ngIf="isUpdate" data-bs-dismiss="modal">Actualizar</button>
-        </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="resetFormEditorial()">Cerrar</button>
+                <button type="button" class="btn btn-primary" (click)="CrearEditorial()" *ngIf="!isUpdate" data-bs-dismiss="modal">Agregar</button>
+                <button type="button" class="btn btn-success" (click)="actualizarEditorial()" *ngIf="isUpdate" data-bs-dismiss="modal">Actualizar</button>
+            </div>
         </div>
     </div>
 </div>

@@ -1,135 +1,257 @@
 <app-navbar></app-navbar>
-<div class="container table-responsive">
-    <div class="d-flex justify-content-between">
-        <h1>Tabla Libros</h1>
-        <button type="button" class="btn btn-outline-secondary bi bi-arrow-left-right" (click)="cambiaVista()"></button>
+<div class="container table-responsive mt-4">
+    <app-header [titulo]="titulo" [icono]="icono"></app-header>
+    <div class="d-flex justify-content-between mt-3 mb-3">
+        <button
+            type="button"
+            class="btn btn-outline-secondary bi bi-arrow-left-right"
+            (click)="cambiaVista()"
+        >
+            Cambiar Vista
+        </button>
+        <button
+            type="button"
+            class="btn btn-success d-flex align-items-center"
+            data-bs-toggle="modal"
+            data-bs-target="#form"
+            (click)="isUpdate=false"
+            *ngIf="isAdmin"
+        >
+            <i class="bi bi-plus me-2"></i> Agregar Libro
+        </button>
     </div>
-    <div class="d-flex justify-content-center mb-2">
-        <button type="button" class="btn btn-success bi bi-plus" data-bs-toggle="modal" data-bs-target="#form" (click)="isUpdate=false"></button>
-    </div>
-    <table class="table" *ngIf="mostrarTabla">
+    <table class="table table-bordered table-hover" *ngIf="mostrarTabla">
         <thead class="table-dark">
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Titulo</th>
-            <th scope="col">Paginas</th>
-            <th scope="col">Edicion</th>
-            <th scope="col">Portada</th>
-            <th scope="col">Descripcion</th>
-            <th scope="col">Seccion</th>
-            <th scope="col">Editorial</th>
-            <th scope="col">Estado</th>
-            <th scope="col">Acción</th>
-        </tr>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Título</th>
+                <th scope="col">Páginas</th>
+                <th scope="col">Edición</th>
+                <th scope="col">Portada</th>
+                <th scope="col">Descripción</th>
+                <th scope="col">Sección</th>
+                <th scope="col">Editorial</th>
+                <th scope="col">Estado</th>
+                <th scope="col" *ngIf="isAdmin">Acción</th>
+            </tr>
         </thead>
-        <tbody class="table-group-divider">
-        <tr *ngFor="let libro of libros; let i = index">
-            <th scope="row">{{ i + 1 }}</th>
-            <!-- <td>{{seccion.idSeccion}}</td> -->
-            <td>{{libro.titulo}}</td>
-            <td>{{libro.paginas}}</td>
-            <td>{{libro.edicion}}</td>
-            <td>{{libro.portada}}</td>
-            <td>{{libro.descripcion}}</td>
-            <td>{{ libro.seccion ? libro.seccion.seccion : 'Sin categoría' }}</td>
-            <td>{{ libro.editorial ? libro.editorial.nombre : 'Sin categoría' }}</td>
-            <td>{{libro.estado}}</td>
-            <td>
-                <button type="button" class="btn btn-outline-success mx-2 bi bi-pencil-fill" (click)="selectLibro(libro)" data-bs-toggle="modal" data-bs-target="#form"></button>
-                <button type="button" class="btn btn-outline-danger bi bi-archive" (click)="eliminarLibro(libro.idLibro)"></button>
-            </td>
-        </tr>
+        <tbody>
+            <tr *ngFor="let libro of libros; let i = index">
+                <th scope="row">{{ i + 1 }}</th>
+                <td>{{ libro.titulo }}</td>
+                <td>{{ libro.paginas }}</td>
+                <td>{{ libro.edicion }}</td>
+                <td>{{ libro.portada }}</td>
+                <td>{{ libro.descripcion }}</td>
+                <td>{{ libro.seccion ? libro.seccion.seccion : 'Sin categoría' }}</td>
+                <td>{{ libro.editorial ? libro.editorial.nombre : 'Sin categoría' }}</td>
+                <td>{{ libro.estado }}</td>
+                <td *ngIf="isAdmin">
+                    <button
+                        type="button"
+                        class="btn btn-outline-success mx-2 bi bi-pencil-fill"
+                        (click)="selectLibro(libro)"
+                        data-bs-toggle="modal"
+                        data-bs-target="#form"
+                    ></button>
+                    <button
+                        type="button"
+                        class="btn btn-outline-danger bi bi-archive"
+                        (click)="eliminarLibro(libro.idLibro)"
+                    ></button>
+                </td>
+            </tr>
         </tbody>
     </table>
 </div>
 
-<div class="container d-flex flex-wrap justify-content-center gap-4"  *ngIf="!mostrarTabla">
+<div class="container d-flex flex-wrap justify-content-center gap-4" *ngIf="!mostrarTabla">
     <div class="card" *ngFor="let libro of libros; let i = index" style="width: 18rem;">
-        <div class="card-header d-flex justify-content-center">
+        <div class="card-header text-center">
             <h5>{{ i + 1 }}</h5>
         </div>
-        <div class="d-flex flex-column">
-            <img src="assets/portada.jpeg" class="card-img-top align-self-center" alt="...">
+        <div class="d-flex flex-column align-items-center">
+            <img
+                src="/assets/portada.jpeg"
+                class="card-img-top img-thumbnail"
+                alt="Portada"
+                style="max-width: 150px;"
+            />
         </div>
         <div class="card-body">
-            <h5 class="card-title">{{libro.titulo}}</h5>
-            <div class="d-flex flex-row gap-4">
-                <p>Paginas: {{libro.paginas}}</p>
-                <p>Edicion: {{libro.paginas}}</p>
-            </div>
-            <div class="d-flex flex-row gap-4">
-                <p>Editorial: {{ libro.editorial ? libro.editorial.nombre : 'Sin categoría' }}</p>
-                <p>Seccion: {{ libro.seccion ? libro.seccion.seccion : 'Sin categoría' }}</p>
-            </div>
-            <p class="card-text">Descripcion: {{libro.descripcion}}</p>
-            <div>
-                <button type="button" class="btn btn-outline-success mx-2 bi bi-pencil-fill" (click)="selectLibro(libro)" data-bs-toggle="modal" data-bs-target="#form"></button>
-                <button type="button" class="btn btn-outline-danger bi bi-archive" (click)="eliminarLibro(libro.idLibro)"></button>
+            <h5 class="card-title">{{ libro.titulo }}</h5>
+            <p><strong>Páginas:</strong> {{ libro.paginas }}</p>
+            <p><strong>Edición:</strong> {{ libro.edicion }}</p>
+            <p><strong>Editorial:</strong> {{ libro.editorial.nombre || 'Sin categoría' }}</p>
+            <p><strong>Sección:</strong> {{ libro.seccion.seccion || 'Sin categoría' }}</p>
+            <p class="card-text"><strong>Descripción:</strong> {{ libro.descripcion }}</p>
+            <div class="d-flex justify-content-center gap-2">
+                <button
+                    type="button"
+                    class="btn btn-outline-success bi bi-pencil-fill"
+                    (click)="selectLibro(libro)"
+                    data-bs-toggle="modal"
+                    data-bs-target="#form"
+                ></button>
+                <button
+                    type="button"
+                    class="btn btn-outline-danger bi bi-archive"
+                    (click)="eliminarLibro(libro.idLibro)"
+                ></button>
             </div>
         </div>
     </div>
 </div>
 
-
-<div class="modal fade" id="form" tabindex="-1" aria-hidden="true">
+<!-- Modal -->
+<div
+    class="modal fade"
+    id="form"
+    tabindex="-1"
+    aria-labelledby="formLabel"
+    aria-hidden="true"
+>
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
-        <div class="modal-header">
-            <h1 class="modal-title fs-5" *ngIf="!isUpdate">Agregar Libro</h1>
-            <h1 class="modal-title fs-5" *ngIf="isUpdate">Actualizar Libro</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <form [formGroup]="formLibro"> 
-            <div class="mb-3">
-                <label for="titulo" class="col-form-label">Titulo:</label>
-                <input type="text" class="form-control" id="titulo" formControlName="titulo">
+            <div class="modal-header">
+                <h5 class="modal-title" id="formLabel">
+                    {{ isUpdate ? 'Actualizar Libro' : 'Agregar Libro' }}
+                </h5>
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Cerrar"
+                ></button>
             </div>
-            <div class="mb-3">
-                <label for="paginas" class="col-form-label">Paginas</label>
-                <input type="text" class="form-control" id="paginas" formControlName="paginas">
+            <div class="modal-body">
+                <form [formGroup]="formLibro">
+                    <div class="mb-3">
+                        <label for="titulo" class="form-label">Título</label>
+                        <input
+                            type="text"
+                            id="titulo"
+                            class="form-control"
+                            formControlName="titulo"
+                        />
+                    </div>
+                    <div class="mb-3">
+                        <label for="paginas" class="form-label">Páginas</label>
+                        <input
+                            type="number"
+                            id="paginas"
+                            class="form-control"
+                            formControlName="paginas"
+                        />
+                    </div>
+                    <div class="mb-3">
+                        <label for="edicion" class="form-label">Edición</label>
+                        <input
+                            type="text"
+                            id="edicion"
+                            class="form-control"
+                            formControlName="edicion"
+                        />
+                    </div>
+                    <div class="mb-3">
+                        <label for="portada" class="form-label">Portada</label>
+                        <input
+                            type="text"
+                            id="portada"
+                            class="form-control"
+                            formControlName="portada"
+                        />
+                    </div>
+                    <div class="mb-3">
+                        <label for="descripcion" class="form-label"
+                            >Descripción</label
+                        >
+                        <textarea
+                            id="descripcion"
+                            class="form-control"
+                            formControlName="descripcion"
+                            rows="3"
+                        ></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="seccion" class="form-label">Sección</label>
+                        <select
+                            id="seccion"
+                            class="form-select"
+                            formControlName="idSeccion"
+                        >
+                            <option value="" disabled selected>
+                                Seleccione una opción
+                            </option>
+                            <option
+                                *ngFor="let seccion of secciones"
+                                [value]="seccion.idSeccion"
+                            >
+                                {{ seccion.seccion }}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editorial" class="form-label">Editorial</label>
+                        <select
+                            id="editorial"
+                            class="form-select"
+                            formControlName="idEditorial"
+                        >
+                            <option value="" disabled selected>
+                                Seleccione una opción
+                            </option>
+                            <option
+                                *ngFor="let editorial of editoriales"
+                                [value]="editorial.idEditorial"
+                            >
+                                {{ editorial.nombre }}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="estado" class="form-label">Estado</label>
+                        <select
+                            id="estado"
+                            class="form-select"
+                            formControlName="estado"
+                        >
+                            <option value="" disabled selected>
+                                Seleccione una opción
+                            </option>
+                            <option value="A">Activo</option>
+                            <option value="I">Inactivo</option>
+                        </select>
+                    </div>
+                </form>
             </div>
-            <div class="mb-3">
-                <label for="edicion" class="col-form-label">Edicion</label>
-                <input type="text" class="form-control" id="edicion" formControlName="edicion">
+            <div class="modal-footer">
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                >
+                    Cerrar
+                </button>
+                <button
+                    *ngIf="!isUpdate"
+                    type="button"
+                    class="btn btn-primary"
+                    (click)="crearLibro()"
+                    data-bs-dismiss="modal"
+                >
+                    Agregar
+                </button>
+                <button
+                    *ngIf="isUpdate"
+                    type="button"
+                    class="btn btn-success"
+                    (click)="actualizarLibro()"
+                    data-bs-dismiss="modal"
+                >
+                    Actualizar
+                </button>
             </div>
-            <div>
-                <label for="portada" class="col-form-label">Portada</label>
-                <input type="text" class="form-control" id="portada" formControlName="portada">
-            </div>
-            <div>
-                <label for="descripcion" class="col-form-label">Descripcion</label>
-                <input type="text" class="form-control" id="descripcion" formControlName="descripcion">
-            </div>
-            <div class="mb-3">
-                <label for="seccion" class="form-label">Seccion:</label>
-                <select id="seccion" class="form-select" formControlName="idSeccion">
-                <option value="" disabled selected>Seleccione una opción</option>
-                <option *ngFor="let seccion of secciones" [value]="seccion.idSeccion">{{ seccion.seccion}}</option>
-                </select>
-            </div>
-            <div class="mb-3">
-                <label for="editorial" class="form-label">Editorial:</label>
-                <select id="editorial" class="form-select" formControlName="idEditorial">
-                <option value="" disabled selected>Seleccione una opción</option>
-                <option *ngFor="let editorial of editoriales" [value]="editorial.idEditorial">{{ editorial.nombre}}</option>
-                </select>
-            </div>
-            <div class="mb-3">
-                <label for="estado" class="form-label">Estado</label>
-                <select class="form-select" aria-label="Default select example" id="estado" formControlName="estado">
-                    <option value="" disabled selected>Seleccione una opción</option>
-                    <option>A</option>
-                    <option>I</option>
-                </select>
-            </div>
-            </form>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="resetFormLibro()">Close</button>
-            <button type="button" class="btn btn-primary" (click)="crearLibro()" *ngIf="!isUpdate" data-bs-dismiss="modal">Agregar</button>
-            <button type="button" class="btn btn-success" (click)="actualizarLibro()" *ngIf="isUpdate" data-bs-dismiss="modal">Actualizar</button>
-        </div>
         </div>
     </div>
 </div>

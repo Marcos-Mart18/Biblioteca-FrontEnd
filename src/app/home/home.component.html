@@ -1,0 +1,29 @@
+<app-navbar></app-navbar>
+<div class="home-container">
+  <header class="hero-section">
+    <h1>{{ title }}</h1>
+    <p>{{ description }}</p>
+  </header>
+
+  <section class="services-section">
+    <h2>Algunos de nuestros Catálogos</h2>
+    <div class="services-grid">
+      <div class="service-card" *ngFor="let service of services">
+        <i class="{{ service.icon }} service-icon"></i>
+        <h3>{{ service.name }}</h3>
+        <p>{{ service.description }}</p>
+        <!-- Botón para explorar el catálogo -->
+        <button class="service-button" [routerLink]="service.link">Explorar</button>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>© 2024 CRAI. Todos los derechos reservados.</p>
+    <!-- Enlaces adicionales en el footer -->
+    <div class="footer-links">
+      <a href="">Política de privacidad</a>
+      <a href="">Contáctanos</a>
+    </div>
+  </footer>
+</div>

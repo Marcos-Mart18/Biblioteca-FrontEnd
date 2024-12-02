@@ -1,33 +1,34 @@
 <app-navbar></app-navbar>
 <div class="container table-responsive">
-    <h1>Tabla Acceso</h1>
-    <div class="d-flex justify-content-center mb-2">
-        <button type="button" class="btn btn-success bi bi-plus" data-bs-toggle="modal" data-bs-target="#form" (click)="isUpdate=false"></button>
+    <app-header [titulo]="titulo" [icono]="icono"></app-header>
+    <div class="d-flex justify-content-center mb-3">
+        <button type="button" class="btn btn-success d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#form" (click)="isUpdate=false">
+            <i class="bi bi-plus me-2"></i> Agregar Acceso
+        </button>
     </div>
-    <table class="table">
+    <table class="table table-bordered table-hover">
         <thead class="table-dark">
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Titutlo</th>
-            <th scope="col">Icono</th>
-            <th scope="col">Url</th>
-            <th scope="col">Estado</th>
-            <th scope="col">Acción</th>
-        </tr>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Título</th>
+                <th scope="col">Ícono</th>
+                <th scope="col">URL</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Acción</th>
+            </tr>
         </thead>
-        <tbody class="table-group-divider">
-        <tr *ngFor="let acceso of accesos; let i = index">
-            <th scope="row">{{ i + 1 }}</th>
-            <!-- <td>{{categoria.idCategoria}}</td> -->
-            <td>{{acceso.titulo}}</td>
-            <td>{{acceso.icono}}</td>
-            <td>{{acceso.url}}</td>
-            <td>{{acceso.estado}}</td>
-            <td>
-                <button type="button" class="btn btn-outline-success mx-2 bi bi-pencil-fill" (click)="selectAcceso(acceso)" data-bs-toggle="modal" data-bs-target="#form"></button>
-                <button type="button" class="btn btn-outline-danger bi bi-archive" (click)="eliminarAcceso(acceso.idAcceso)"></button>
-            </td>
-        </tr>
+        <tbody>
+            <tr *ngFor="let acceso of accesos; let i = index">
+                <th scope="row">{{ i + 1 }}</th>
+                <td>{{ acceso.titulo }}</td>
+                <td>{{ acceso.icono }}</td>
+                <td>{{ acceso.url }}</td>
+                <td>{{ acceso.estado }}</td>
+                <td>
+                    <button type="button" class="btn btn-outline-success mx-2 bi bi-pencil-fill" (click)="selectAcceso(acceso)" data-bs-toggle="modal" data-bs-target="#form"></button>
+                    <button type="button" class="btn btn-outline-danger bi bi-archive" (click)="eliminarAcceso(acceso.idAcceso)"></button>
+                </td>
+            </tr>
         </tbody>
     </table>
 </div>
@@ -35,40 +36,40 @@
 <div class="modal fade" id="form" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-        <div class="modal-header">
-            <h1 class="modal-title fs-5" *ngIf="!isUpdate">Agregar Acceso</h1>
-            <h1 class="modal-title fs-5" *ngIf="isUpdate">Actualizar Acceso</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <form [formGroup]="formAcceso"> 
-            <div class="mb-3">
-                <label for="titulo" class="col-form-label">Titulo:</label>
-                <input type="text" class="form-control" id="titulo" formControlName="titulo">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" *ngIf="!isUpdate">Agregar Acceso</h1>
+                <h1 class="modal-title fs-5" *ngIf="isUpdate">Actualizar Acceso</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="mb-3">
-                <label for="icono" class="col-form-label">Icono:</label>
-                <input type="text" class="form-control" id="icono" formControlName="icono">
+            <div class="modal-body">
+                <form [formGroup]="formAcceso">
+                    <div class="mb-3">
+                        <label for="titulo" class="col-form-label">Título:</label>
+                        <input type="text" class="form-control" id="titulo" formControlName="titulo">
+                    </div>
+                    <div class="mb-3">
+                        <label for="icono" class="col-form-label">Ícono:</label>
+                        <input type="text" class="form-control" id="icono" formControlName="icono">
+                    </div>
+                    <div class="mb-3">
+                        <label for="url" class="col-form-label">URL:</label>
+                        <input type="text" class="form-control" id="url" formControlName="url">
+                    </div>
+                    <div class="mb-3">
+                        <label for="estado" class="form-label">Estado:</label>
+                        <select class="form-select" id="estado" formControlName="estado">
+                            <option value="" disabled selected>Seleccione una opción</option>
+                            <option value="A">Activo</option>
+                            <option value="I">Inactivo</option>
+                        </select>
+                    </div>
+                </form>
             </div>
-            <div class="mb-3">
-                <label for="url" class="col-form-label">Url:</label>
-                <input type="text" class="form-control" id="url" formControlName="url">
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="resetFormAcceso()">Cerrar</button>
+                <button type="button" class="btn btn-primary" (click)="CrearAccesos()" *ngIf="!isUpdate" data-bs-dismiss="modal">Agregar</button>
+                <button type="button" class="btn btn-success" (click)="actualizarAcceso()" *ngIf="isUpdate" data-bs-dismiss="modal">Actualizar</button>
             </div>
-            <div class="mb-3">
-                <label for="estado" class="form-label">Estado</label>
-                <select class="form-select" aria-label="Default select example" id="estado" formControlName="estado">
-                    <option value="" disabled selected>Seleccione una opción</option>
-                    <option>A</option>
-                    <option>I</option>
-                </select>
-            </div>
-            </form>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="resetFormAcceso()">Close</button>
-            <button type="button" class="btn btn-primary" (click)="CrearAccesos()" *ngIf="!isUpdate" data-bs-dismiss="modal">Agregar</button>
-            <button type="button" class="btn btn-success" (click)="actualizarAcceso()" *ngIf="isUpdate" data-bs-dismiss="modal">Actualizar</button>
-        </div>
         </div>
     </div>
 </div>

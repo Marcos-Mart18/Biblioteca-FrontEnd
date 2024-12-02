@@ -5,11 +5,12 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
 import { Acceso } from '../../model/acceso';
 import { AccesoService } from '../../service/acceso.service';
 import Swal from 'sweetalert2';
+import { HeaderComponent } from '../header/header.component';
 
 @Component({
   selector: 'app-acceso',
   standalone: true,
-  imports: [NavbarComponent,NgFor,FormsModule,NgIf,ReactiveFormsModule],
+  imports: [NavbarComponent,NgFor,FormsModule,NgIf,ReactiveFormsModule,HeaderComponent],
   templateUrl: './acceso.component.html',
   styleUrl: './acceso.component.css'
 })
@@ -17,6 +18,8 @@ export class AccesoComponent {
   accesos: Acceso[]=[];
   isUpdate:boolean = false;
   formAcceso:FormGroup = new FormGroup({});
+  titulo='Gestión de Accesos';
+  icono='bi bi-boombox-fill';
 
   constructor(
     private accessoService:AccesoService
@@ -92,31 +95,43 @@ selectAcceso(acceso: any){
 }
 
 actualizarAcceso() {
-  this.accessoService.actualizarAcceso(this.formAcceso.value).subscribe(resp=>{
-    if (resp) {
-      const Toast = Swal.mixin({
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-        background: '#fff',  // Ajuste del fondo
-        didOpen: (toast) => {
-          toast.onmouseenter = Swal.stopTimer;
-          toast.onmouseleave = Swal.resumeTimer;
-        },
-        customClass: {
-          popup: 'custom-toast-popup'
-        }
+  this.accessoService.actualizarAcceso(this.formAcceso.value).subscribe({
+    next: (resp) => {
+      if (resp) {
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          background: '#fff', // Ajuste del fondo
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          },
+          customClass: {
+            popup: 'custom-toast-popup',
+          },
+        });
+        Toast.fire({
+          icon: 'success',
+          title: 'Acceso actualizado',
+        });
+        this.listarAccesos();
+        this.formAcceso.reset();
+      }
+    },
+    error: (err) => {
+      console.error('Error actualizando el acceso', err);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'No se pudo actualizar el acceso',
       });
-      Toast.fire({
-        icon: 'success',
-        title: 'Acceso actualizado'
-      });
-      this.listarAccesos();
-      this.formAcceso.reset();
-  }});
+    },
+  });
 }
+
 
 eliminarAcceso(idAcceso: any){
   Swal.fire({

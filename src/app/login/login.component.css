@@ -1,0 +1,168 @@
+:host {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Altura completa de la pantalla */
+    width: 100%; /* Ancho completo de la pantalla */
+    background-image: url('/assets/library.jpg'); /* Imagen de fondo */
+    background-size: cover; /* Que la imagen cubra todo */
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+:host::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(44, 44, 44, 0.8); /* Oscurece la imagen */
+    z-index: 1; /* Asegura que esté detrás del formulario */
+}
+
+.container {
+    display: flex;
+    flex-direction: column; /* Centra elementos en columna */
+    justify-content: center; /* Centra verticalmente */
+    align-items: center; /* Centra horizontalmente */
+    z-index: 2; /* Encima del overlay oscuro */
+    position: relative;
+}
+
+.img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px; /* Separación con el formulario */
+}
+
+.img img {
+    max-width: 150px; /* Tamaño máximo de la imagen */
+    width: 100%; /* Escala relativa */
+    height: auto; /* Mantener proporción */
+    margin-bottom: 15px; /* Separación con el formulario */
+}
+
+.form {
+    padding: 1.5rem;
+    max-width: 390px; /* Ancho máximo del formulario */
+    width: 100%; /* Asegura que no exceda el contenedor */
+    border-radius: 0.4rem;
+    background-color: rgba(255, 255, 255, 0.5); /* Fondo blanco más transparente */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra para destacar */
+    position: relative;
+    z-index: 2; /* Encima del overlay */
+    text-align: center; /* Centra el texto */
+}
+
+.form-title {
+    font-size: 1.5rem; /* Tamaño del texto */
+    font-weight: 700; /* Negrita */
+    color: #333333; /* Texto oscuro */
+    margin-bottom: 1rem; /* Separación */
+}
+
+.input-container {
+    margin-bottom: 1rem; /* Separación entre campos */
+    position: relative;
+    text-align: center;
+}
+
+.input-container input {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 0.4rem;
+    background-color: rgba(240, 240, 240, 0.9);
+    color: #333333;
+    text-align: center;
+}
+
+.input-container input::placeholder {
+    color: rgba(100, 100, 100, 0.7);
+}
+
+.input-container .toggle-password-icon {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    font-size: 1.25rem;
+    color: rgba(0, 0, 0, 0.7);
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.input-container .toggle-password-icon:hover {
+    color: #333333;
+}
+
+.submit {
+    display: block;
+    padding: 0.75rem;
+    background-color: #FFBC2B;
+    color: #333333;
+    font-size: 1rem;
+    font-weight: 600;
+    width: 100%;
+    border: none;
+    border-radius: 0.4rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit:hover {
+    background-color: #e0a51d;
+}
+
+.signup-link {
+    color: #333333;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+}
+
+.signup-link a {
+    text-decoration: underline;
+    color: #3B82F6;
+}
+
+.error-message {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+}
+
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 1.5rem;
+    z-index: 1000;
+    flex-direction: column;
+}
+
+.spinner {
+    margin-top: 15px;
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(255, 255, 255, 0.2);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}

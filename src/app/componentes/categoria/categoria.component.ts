@@ -7,11 +7,13 @@ import { FormControl, FormGroup, FormsModule, NgControl, ReactiveFormsModule } f
 //sweetalert
 import Swal from 'sweetalert2';
 import 'sweetalert2/src/sweetalert2.scss';
+import { HeaderComponent } from '../header/header.component';
+import { AuthService } from '../../auth.service';
 
 @Component({
   selector: 'app-categoria',
   standalone: true,
-  imports: [NavbarComponent,NgFor,FormsModule,NgIf,ReactiveFormsModule],
+  imports: [NavbarComponent,NgFor,FormsModule,NgIf,ReactiveFormsModule,HeaderComponent],
   templateUrl: './categoria.component.html',
   styleUrl: './categoria.component.css'
 })
@@ -19,10 +21,22 @@ export class CategoriaComponent {
   categorias: Categoria[]=[];
   isUpdate:boolean = false;
   formCategoria:FormGroup = new FormGroup({});
+  titulo='Gestión de Categorías';
+  icono='bi bi-bag-dash-fill';
 
   constructor(
-    private categoriaService:CategoriaService
+    private categoriaService:CategoriaService,
+    private authService: AuthService
   ){}
+
+
+  get isAdmin(): boolean {
+    return this.authService.hasRole('ROLE_ADMIN');
+  }
+  
+  get isUser(): boolean {
+    return this.authService.hasRole('ROLE_USER');
+  }
 
   ngOnInit():void{
     this.listarCategorias();
@@ -90,31 +104,43 @@ selectCategoria(categoria: any){
 }
 
 actualizarCategoria() {
-  this.categoriaService.actualizarCategoria(this.formCategoria.value).subscribe(resp=>{
-    if (resp) {
-      const Toast = Swal.mixin({
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-        background: '#fff',  // Ajuste del fondo
-        didOpen: (toast) => {
-          toast.onmouseenter = Swal.stopTimer;
-          toast.onmouseleave = Swal.resumeTimer;
-        },
-        customClass: {
-          popup: 'custom-toast-popup'
-        }
+  this.categoriaService.actualizarCategoria(this.formCategoria.value).subscribe({
+    next: (resp) => {
+      if (resp) {
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          background: '#fff',
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          },
+          customClass: {
+            popup: 'custom-toast-popup',
+          },
+        });
+        Toast.fire({
+          icon: 'success',
+          title: 'Categoría actualizada',
+        });
+        this.listarCategorias();
+        this.formCategoria.reset();
+      }
+    },
+    error: (err) => {
+      console.error('Error actualizando la categoría', err);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'No se pudo actualizar la categoría',
       });
-      Toast.fire({
-        icon: 'success',
-        title: 'Categoría actualizada'
-      });
-      this.listarCategorias();
-      this.formCategoria.reset();
-  }});
+    },
+  });
 }
+
 
 eliminarCategoria(idCategoria: any){
   Swal.fire({

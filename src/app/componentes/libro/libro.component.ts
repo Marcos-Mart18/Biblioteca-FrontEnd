@@ -9,11 +9,13 @@ import { LibroService } from '../../service/libro.service';
 import { SeccionService } from '../../service/seccion.service';
 import { EditorialService } from '../../service/editorial.service';
 import Swal from 'sweetalert2';
+import { HeaderComponent } from '../header/header.component';
+import { AuthService } from '../../auth.service';
 
 @Component({
   selector: 'app-libro',
   standalone: true,
-  imports: [NavbarComponent,NgFor,FormsModule,NgIf,ReactiveFormsModule],
+  imports: [NavbarComponent,NgFor,FormsModule,NgIf,ReactiveFormsModule,HeaderComponent],
   templateUrl: './libro.component.html',
   styleUrl: './libro.component.css'
 })
@@ -24,6 +26,8 @@ export class LibroComponent {
   isUpdate:boolean = false;
   formLibro:FormGroup = new FormGroup({});
   mostrarTabla: boolean = true;
+  titulo='Gestión de Libros';
+  icono='bi bi-boombox-fill';
 
   cambiaVista() {
     this.mostrarTabla = !this.mostrarTabla;
@@ -32,8 +36,17 @@ export class LibroComponent {
   constructor(
     private libroService:LibroService,
     private seccionService:SeccionService,
-    private editorialService:EditorialService
+    private editorialService:EditorialService,
+    private authService: AuthService
   ){}
+
+  get isAdmin(): boolean {
+    return this.authService.hasRole('ROLE_ADMIN');
+  }
+  
+  get isUser(): boolean {
+    return this.authService.hasRole('ROLE_USER');
+  }
 
   ngOnInit():void{
     this.listarLibros();

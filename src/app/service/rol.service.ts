@@ -23,9 +23,10 @@ export class RolService {
     return this.http.get<Rol>(`${this.apiUrl}/${idRol}`);
   }
 
-  actualizarRol(rol: Rol):Observable<Rol>{
-    return this.http.post<Rol>(this.apiUrl,rol);
+  actualizarRol(rol: Rol): Observable<Rol> {
+    return this.http.put<Rol>(`${this.apiUrl}/${rol.idRol}`, rol);
   }
+  
 
   deleteRol(idRol: number){
     return this.http.delete(`${this.apiUrl}/${idRol}`);

@@ -1,72 +1,72 @@
 <app-navbar></app-navbar>
 <div class="container table-responsive">
-    <h1>Tabla Secciones</h1>
-    <div class="d-flex justify-content-center mb-2">
-        <button type="button" class="btn btn-success bi bi-plus" data-bs-toggle="modal" data-bs-target="#form" (click)="isUpdate=false"></button>
+    <app-header [titulo]="titulo" [icono]="icono"></app-header>
+    <div class="d-flex justify-content-center mb-3">
+        <button type="button" class="btn btn-success d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#form" (click)="isUpdate=false" *ngIf="isAdmin">
+            <i class="bi bi-plus me-2"></i> Agregar Sección
+        </button>
     </div>
-    <table class="table">
+    <table class="table table-bordered table-hover">
         <thead class="table-dark">
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Categoria</th>
-            <th scope="col">Estado</th>
-            <th scope="col">Acción</th>
-        </tr>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Categoría</th>
+                <th scope="col">Estado</th>
+                <th scope="col" *ngIf="isAdmin">Acción</th>
+            </tr>
         </thead>
-        <tbody class="table-group-divider">
-        <tr *ngFor="let seccion of secciones; let i = index">
-            <th scope="row">{{ i + 1 }}</th>
-            <!-- <td>{{seccion.idSeccion}}</td> -->
-            <td>{{seccion.seccion}}</td>
-            <td>{{ seccion.categoria ? seccion.categoria.nombre : 'Sin categoría' }}</td>
-            <td>{{seccion.estado}}</td>
-            <td>
-                <button type="button" class="btn btn-outline-success mx-2 bi bi-pencil-fill" (click)="selectSeccion(seccion)" data-bs-toggle="modal" data-bs-target="#form"></button>
-                <button type="button" class="btn btn-outline-danger bi bi-archive" (click)="eliminarSeccion(seccion.idSeccion)"></button>
-            </td>
-        </tr>
+        <tbody>
+            <tr *ngFor="let seccion of secciones; let i = index">
+                <th scope="row">{{ i + 1 }}</th>
+                <td>{{ seccion.seccion }}</td>
+                <td>{{ seccion.categoria ? seccion.categoria.nombre : 'Sin categoría' }}</td>
+                <td>{{ seccion.estado }}</td>
+                <td *ngIf="isAdmin">
+                    <button type="button" class="btn btn-outline-success mx-2 bi bi-pencil-fill" (click)="selectSeccion(seccion)" data-bs-toggle="modal" data-bs-target="#form"></button>
+                    <button type="button" class="btn btn-outline-danger bi bi-archive" (click)="eliminarSeccion(seccion.idSeccion)"></button>
+                </td>
+            </tr>
         </tbody>
     </table>
 </div>
 
-
 <div class="modal fade" id="form" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-        <div class="modal-header">
-            <h1 class="modal-title fs-5" *ngIf="!isUpdate">Agregar Seccion</h1>
-            <h1 class="modal-title fs-5" *ngIf="isUpdate">Actualizar Seccion</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <form [formGroup]="formSeccion"> 
-            <div class="mb-3">
-                <label for="nombre" class="col-form-label">Nombre:</label>
-                <input type="text" class="form-control" id="nombre" formControlName="seccion">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" *ngIf="!isUpdate">Agregar Sección</h1>
+                <h1 class="modal-title fs-5" *ngIf="isUpdate">Actualizar Sección</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
             </div>
-            <div class="mb-3">
-                <label for="categoria" class="form-label">Categoria</label>
-                <select id="categoria" class="form-select" formControlName="idCategoria">
-                <option value="" disabled selected>Seleccione una opción</option>
-                <option *ngFor="let categoria of categorias" [value]="categoria.idCategoria">{{ categoria.nombre}}</option>
-                </select>
+            <div class="modal-body">
+                <form [formGroup]="formSeccion">
+                    <div class="mb-3">
+                        <label for="nombre" class="col-form-label">Nombre:</label>
+                        <input type="text" class="form-control" id="nombre" formControlName="seccion">
+                    </div>
+                    <div class="mb-3">
+                        <label for="categoria" class="form-label">Categoría:</label>
+                        <select id="categoria" class="form-select" formControlName="idCategoria">
+                            <option value="" disabled selected>Seleccione una opción</option>
+                            <option *ngFor="let categoria of categorias" [value]="categoria.idCategoria">{{ categoria.nombre }}</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="estado" class="form-label">Estado:</label>
+                        <select class="form-select" id="estado" formControlName="estado">
+                            <option value="" disabled selected>Seleccione una opción</option>
+                            <option value="A">Activo</option>
+                            <option value="I">Inactivo</option>
+                        </select>
+                    </div>
+                </form>
             </div>
-            <div class="mb-3">
-                <label for="estado" class="form-label">Estado</label>
-                <select class="form-select" aria-label="Default select example" id="estado" formControlName="estado">
-                    <option value="" disabled selected>Seleccione una opción</option>
-                    <option>A</option>
-                    <option>I</option>
-                </select>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="resetFormSeccion()">Cerrar</button>
+                <button type="button" class="btn btn-primary" (click)="CrearSeccion()" *ngIf="!isUpdate" data-bs-dismiss="modal">Agregar</button>
+                <button type="button" class="btn btn-success" (click)="actualizarSeccion()" *ngIf="isUpdate" data-bs-dismiss="modal">Actualizar</button>
             </div>
-            </form>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="resetFormSeccion()">Close</button>
-            <button type="button" class="btn btn-primary" (click)="CrearSeccion()" *ngIf="!isUpdate" data-bs-dismiss="modal">Agregar</button>
-            <button type="button" class="btn btn-success" (click)="actualizarSeccion()" *ngIf="isUpdate" data-bs-dismiss="modal">Actualizar</button>
-        </div>
         </div>
     </div>
 </div>

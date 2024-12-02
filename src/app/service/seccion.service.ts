@@ -22,9 +22,10 @@ export class SeccionService {
     return this.http.get<Seccion>(`${this.apiUrl}/${idSeccion}`);
   }
 
-  actualizarSeccion(seccion: Seccion):Observable<Seccion>{
-    return this.http.post<Seccion>(this.apiUrl,seccion);
+  actualizarSeccion(seccion: Seccion): Observable<Seccion> {
+    return this.http.put<Seccion>(`${this.apiUrl}/${seccion.idSeccion}`, seccion);
   }
+  
 
   deleteSeccion(idSeccion: number){
     return this.http.delete(`${this.apiUrl}/${idSeccion}`);
